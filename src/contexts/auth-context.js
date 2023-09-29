@@ -1,5 +1,7 @@
 import { createContext, useContext, useEffect, useReducer, useRef } from 'react';
 import PropTypes from 'prop-types';
+import * as authProtocol from '../Backend/AuthProtocol';
+import axios from "axios";
 
 const HANDLERS = {
   INITIALIZE: 'INITIALIZE',
@@ -129,14 +131,16 @@ export const AuthProvider = (props) => {
 
   // TODO: 登入從這裡開始改
   const signIn = async (email, password) => {
-    if (email !== 'demo@devias.io' || password !== 'Password123!') {
-      throw new Error('Please check your email and password');
-    }
-
     try {
+      const data = await authProtocol.login(email, password)
+      console.log(data);
       window.sessionStorage.setItem('authenticated', 'true');
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${data.accessToken}`;
     } catch (err) {
       console.error(err);
+      throw new Error('Please check your email and password');
     }
     const user = {
       id: '5e86809283e28b96d2d38537',
@@ -151,8 +155,14 @@ export const AuthProvider = (props) => {
     });
   };
   // TODO: 註冊從這裡開始改
-  const signUp = async (email, name, password) => {
-    throw new Error('Sign up is not implemented');
+  const signUp = async (name, password) => {
+    console.log(name, password);
+    try {
+      const data = await authProtocol.regist(name, password);
+      console.log(data)
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   const signOut = () => {

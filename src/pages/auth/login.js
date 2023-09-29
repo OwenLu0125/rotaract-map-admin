@@ -32,7 +32,6 @@ const Page = () => {
     validationSchema: Yup.object({
       email: Yup
         .string()
-        .email('Must be a valid email')
         .max(255)
         .required('Email is required'),
       password: Yup
@@ -99,7 +98,7 @@ const Page = () => {
               <Typography variant="h4">
                 Login
               </Typography>
-              <Typography
+              {/* <Typography
                 color="text.secondary"
                 variant="body2"
               >
@@ -113,7 +112,7 @@ const Page = () => {
                 >
                   Register
                 </Link>
-              </Typography>
+              </Typography> */}
             </Stack>
             <Tabs
               onChange={handleMethodChange}
