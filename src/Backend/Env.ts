@@ -1,0 +1,1 @@
+export const BACKEND_DOMAIN = "http://35.236.190.89/rotaract-map-admin-backend-test";
