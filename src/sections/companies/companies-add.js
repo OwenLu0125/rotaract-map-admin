@@ -3,10 +3,10 @@ import {
   Box,
   Button,
   Modal,
-  PlusIcon,
   SvgIcon,
   Typography,
 } from '@mui/material';
+import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
 
 const style = {
   position: 'absolute',
@@ -15,7 +15,7 @@ const style = {
   transform: 'translate(-50%, -50%)',
   width: 400,
   bgcolor: 'background.paper',
-  border: '2px solid #000',
+  borderRadius: '12px',
   boxShadow: 24,
   p: 4,
 };
@@ -51,16 +51,17 @@ export const CompaniesAdd = () => {
             variant="h6" 
             component="h2"
           >
-            Text in a modal
+            新增店家
           </Typography>
           <Typography id="modal-modal-description"
             sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            未來可以在這裡新增店家
           </Typography>
         </Box>
       </Modal>
     </div>
     </>
+
   );
 };
 

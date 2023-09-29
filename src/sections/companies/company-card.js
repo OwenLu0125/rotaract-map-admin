@@ -42,7 +42,7 @@ export const CompanyCard = (props) => {
         </Typography>
       </CardContent>
       <Box sx={{ flexGrow: 1 }} />
-      <Divider />
+      {/* 這裡要註解 */}
       <Stack
         alignItems="center"
         direction="row"
@@ -89,6 +89,7 @@ export const CompanyCard = (props) => {
           </Typography>
         </Stack>
       </Stack>
+      {/* ------- */}
     </Card>
   );
 };
