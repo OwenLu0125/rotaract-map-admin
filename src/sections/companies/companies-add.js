@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState, useCallback } from 'react';
 import {
   Box,
   Button,
@@ -9,6 +9,7 @@ import {
   TextField,
 } from '@mui/material';
 import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
+import { putStoreById } from '../../Backend/StoreProtocol'
 
 const style = {
   position: 'absolute',
@@ -23,13 +24,62 @@ const style = {
   borderRadius: '12px',
   boxShadow: 24,
   p: 4,
-  
 };
 
 export const CompaniesAdd = () => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [values, setValues] = useState({
+    categoryId: 'string',
+    name: 'string',
+    status: 'string',
+    logoImageUrl: 'string',
+    siteUrl: 'string',
+    address: 'string',
+    openingHours: 'string',
+    closedHours: 'string',
+    phone: 'string',
+    lineId: 'string',
+    description: 'string',
+    discountInfo: 'string',
+    discountDescription: 'string',
+    discountStartTime: '2023-10-03T08:08:06.278Z',
+    discountEndTime: '2023-10-03T08:08:06.278Z',
+    latitude: 'string',
+    longitude: 'string'
+  }
+  );
+
+  const handleChange = useCallback(
+    (event) => {
+      setValues((prevState) => ({
+        ...prevState,
+        [event.target.name]: event.target.value
+      }));
+    },
+    []
+  );
+
+  const handleSubmit = useCallback(
+    async (event) => {
+      event.preventDefault();
+      const id = '1';
+      try {
+        // 使用 Axios 或其他方法发送数据到后端 API
+        const response = await postStore( values)
+        console.log('Response from server:', response.data);
+        // 关闭模态框或执行其他操作
+        handleClose();
+      } catch (error) {
+        console.error('Error submitting form:', error);
+        // 处理错误情况
+      }
+    },
+    []
+  );
+
+
   return (
     <>
       <div>
@@ -63,26 +113,35 @@ export const CompaniesAdd = () => {
               sx={{ mt: 2 }}>
               填寫店家資訊
             </Typography>
-            <form >
+            <form
+              noValidate
+              onSubmit={handleSubmit}
+            >
               <Stack spacing={2}
                 sx={{ mt: 2 }}
               >
-                <TextField id="outlined-basic"
+                <TextField
+                  fullWidth
                   label="店家名稱"
                   variant="outlined"
-                  sx={{
-                    width: '100%'
-                  }}
+                  onChange={handleChange}
+                  required
+                  name="name" // 设置name属性以匹配values中的字段
+                  value={values.name}
                 />
-                <TextField id="outlined-basic"
+                <TextField
+                  fullWidth
                   label="商店描述"
                   variant="outlined"
-                  sx={{
-                    width: '100%'
-                  }}
+                  onChange={handleChange}
+                  required
+                  name="description" // 设置name属性以匹配values中的字段
+                  value={values.description}
                 />
+                {/* 未來新增處 */}
                 <Button
                   variant="contained"
+                  type="submit"
                 >
                   新增
                 </Button>
