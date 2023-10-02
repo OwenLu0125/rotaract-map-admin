@@ -105,7 +105,6 @@ export const AuthProvider = (props) => {
     () => {
       initialize();
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
@@ -131,28 +130,29 @@ export const AuthProvider = (props) => {
 
   // TODO: 登入從這裡開始改
   const signIn = async (email, password) => {
+    let data;
     try {
-      const data = await authProtocol.login(email, password)
+      data = await authProtocol.login(email, password)
       console.log(data);
-      window.sessionStorage.setItem('authenticated', 'true');
+      const user = {
+        id: '5e86809283e28b96d2d38537',
+        avatar: '/assets/avatars/avatar-anika-visser.png',
+        name: 'Anika Visser',
+        email: 'anika.visser@devias.io',
+        accessToken: data.accessToke
+      };
       axios.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${data.accessToken}`;
+      dispatch({
+        type: HANDLERS.SIGN_IN,
+        payload: user
+      });
+      window.sessionStorage.setItem('authenticated', 'true');
     } catch (err) {
       console.error(err);
       throw new Error('Please check your email and password');
     }
-    const user = {
-      id: '5e86809283e28b96d2d38537',
-      avatar: '/assets/avatars/avatar-anika-visser.png',
-      name: 'Anika Visser',
-      email: 'anika.visser@devias.io'
-    };
-
-    dispatch({
-      type: HANDLERS.SIGN_IN,
-      payload: user
-    });
   };
   // TODO: 註冊從這裡開始改
   const signUp = async (name, password) => {
