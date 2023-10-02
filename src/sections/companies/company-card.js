@@ -23,7 +23,7 @@ export const CompanyCard = (props) => {
           }}
         >
           <Avatar
-            src={company.logo}
+            src={company.logoImageUrl}
             variant="square"
           />
         </Box>
@@ -32,7 +32,7 @@ export const CompanyCard = (props) => {
           gutterBottom
           variant="h5"
         >
-          {company.title}
+          {company.name}
         </Typography>
         <Typography
           align="center"
@@ -43,7 +43,7 @@ export const CompanyCard = (props) => {
       </CardContent>
       <Box sx={{ flexGrow: 1 }} />
       {/* 這裡要註解 */}
-      <Stack
+      {/* <Stack
         alignItems="center"
         direction="row"
         justifyContent="space-between"
@@ -88,7 +88,7 @@ export const CompanyCard = (props) => {
             {company.downloads} Downloads
           </Typography>
         </Stack>
-      </Stack>
+      </Stack> */}
       {/* ------- */}
     </Card>
   );
