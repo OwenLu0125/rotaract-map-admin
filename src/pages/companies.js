@@ -386,15 +386,20 @@ const companies = [
 
 const Page = () => {
   const [companiesData, setCompaniesData] = useState([]);
-
+// FIXME: 串接的寫法
   useEffect(() => {
-    authProtocol.getStore().then((data) => setCompaniesData(data));
+    try {
+      const data = authProtocol.getStore()
+      console.log(data)
+      setCompaniesData(data)
+    } catch (error) {
+      console.error(error)
+    }
   }, []);
 
   useEffect(() => {
     console.log(companiesData)
   }, [companiesData])
-  
   return (
     <>
       <Head>

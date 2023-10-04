@@ -149,6 +149,7 @@ export const AuthProvider = (props) => {
         payload: user
       });
       window.sessionStorage.setItem('authenticated', 'true');
+      window.sessionStorage.setItem('token', data.accessToken);
     } catch (err) {
       console.error(err);
       throw new Error('Please check your email and password');
