@@ -1,6 +1,6 @@
 export type Store = {
   id: number;
-  categoryId: number;
+  categoryId: string;
   name: string;
   status: "opening" | "launching" | "closed";
   logoImageUrl: string;
@@ -13,8 +13,8 @@ export type Store = {
   description: string;
   discountInfo: string;
   discountDescription: string;
-  discountStartTime: string;
-  discountEndTime: string;
+  discountStartTime: Date;
+  discountEndTime: Date;
   latitude: string,
   longitude: string;
 };
