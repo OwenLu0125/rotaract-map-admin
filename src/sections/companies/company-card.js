@@ -1,23 +1,41 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ArrowDownOnSquareIcon from '@heroicons/react/24/solid/ArrowDownOnSquareIcon';
 import ClockIcon from '@heroicons/react/24/solid/ClockIcon';
-import { Avatar, Box, Card, CardContent, Divider, Stack, SvgIcon, Typography, CardActionArea, Modal, Popover } from '@mui/material';
+import { Avatar, Box, Card, CardContent, Divider, Stack, SvgIcon, Typography, CardActionArea, Modal, Popover, TextField, Button } from '@mui/material';
+
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: {
+    xs: 380,
+    sm: 500,
+  },
+  bgcolor: 'background.paper',
+  borderRadius: '12px',
+  boxShadow: 24,
+  p: 4,
+};
 
 export const CompanyCard = (props) => {
   const { company } = props;
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [cardOpen, setCardOpen] = useState(false);
+  const handleCardOpen = () => setCardOpen(true);
+  const handleCardClose = () => setCardOpen(false);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
+  const handleChange = useCallback(
+    (event) => {
+      const { name, value } = event.target; // 拿value的值
+      setValues((prevState) => ({
+        ...prevState,
+        [name]: value, // 使用value的名稱更新values中對應的字串
+      }));
+    },
+    []
+  );
 
   return (
     <Card
@@ -27,24 +45,75 @@ export const CompanyCard = (props) => {
         height: '100%'
       }}
     >
-      <Popover
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}
+      <Modal
+        open={cardOpen}
+        onClose={handleCardClose}
       >
-        <Typography sx={{ p: 2 }}>{company.description}</Typography>
-      </Popover>
+        <Box sx={style}>
+          <Stack spacing={2}
+            sx={{ mt: 2 }}
+          >
+            <Typography id="modal-modal-title"
+              variant="h6"
+              component="h2"
+            >
+              編輯店家資訊
+            </Typography>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                pb: 3,
+              }}
+            >
+              <Avatar
+                src={company.logoImageUrl}
+                variant="square"
+              />
+            </Box>
+            <TextField
+              fullWidth
+              label="店家名稱"
+              variant="outlined"
+              onChange={handleChange}
+              required
+              name="name" // 設定name属性以對應values中的字串
+              placeholder='name'
+              value={company.name}
+            />
+            <TextField
+              fullWidth
+              label="商店描述"
+              multiline
+              maxRows={4}
+              variant="outlined"
+              onChange={handleChange}
+              required
+              name="description"
+              placeholder='description'
+              value={company.description}
+            />
+            {/* 未來新增處 */}
+            <Button
+              variant="contained"
+              type="submit"
+            >
+              新增
+            </Button>
+            <Button
+              variant="contained"
+              type="submit"
+              sx={{
+                backgroundColor: '#F79009',
+              }}
+            >
+              刪除
+            </Button>
+          </Stack>
+        </Box>
+      </Modal>
       <CardActionArea
-        onClick={handleClick}
+        onClick={handleCardOpen}
       >
         <CardContent>
           <Box
