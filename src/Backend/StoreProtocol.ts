@@ -1,4 +1,3 @@
-import axios from "axios";
 import { BACKEND_DOMAIN } from "./Env";
 import { Store } from "./types/Store";
 import  {axiosInstance as instance} from './AxiosInstance'
@@ -20,7 +19,7 @@ export async function getStore() {
   const response = await instance.get<Store>(`${BACKEND_DOMAIN}/store`);
   return response.data;
 }
-export async function postStore(values) {
+export async function postStore(values: any ) {
   const response = await instance.post<Store>(`${BACKEND_DOMAIN}/store`,values);
   return response.data;
 }
