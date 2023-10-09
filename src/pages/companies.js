@@ -14,10 +14,15 @@ import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { CompanyCard } from 'src/sections/companies/company-card';
 import { CompaniesSearch } from 'src/sections/companies/companies-search';
 import { CompaniesAdd } from 'src/sections/companies/companies-add';
+import { applyPagination } from 'src/utils/apply-pagination';
 
 
 const Page = () => {
   const [companiesData, setCompaniesData] = useState([]);
+  const [page, setPage] = useState(0); // 目前頁碼
+  const [rowsPerPage, setRowsPerPage] = useState(4); // 每頁行數
+  const paginatedData = applyPagination(companiesData, page, rowsPerPage);
+
   useEffect(() => {
     const getCompaniesData = async () => {
       try {
@@ -35,7 +40,7 @@ const Page = () => {
     <>
       <Head>
         <title>
-          Companies | Devias Kit
+          已註冊店家管理
         </title>
       </Head>
       <Box
@@ -64,7 +69,7 @@ const Page = () => {
               container
               spacing={3}
             >
-              {companiesData.map((company) => (
+              {paginatedData.map((company) => (
                 <Grid
                   xs={12}
                   md={6}
@@ -82,8 +87,10 @@ const Page = () => {
               }}
             >
               <Pagination
-                count={3}
-                size="small"
+                count={Math.ceil(companiesData.length / rowsPerPage)} // 總頁數
+                page={page + 1} // 目前頁碼
+                onChange={(event, value) => setPage(value - 1)} // 處理頁碼變化的回調
+                size="large"
               />
             </Box>
           </Stack>
