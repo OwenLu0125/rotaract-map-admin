@@ -19,8 +19,8 @@ import { applyPagination } from 'src/utils/apply-pagination';
 
 const Page = () => {
   const [companiesData, setCompaniesData] = useState([]);
-  const [page, setPage] = useState(0); // 当前页码
-  const [rowsPerPage, setRowsPerPage] = useState(4); // 每页行数
+  const [page, setPage] = useState(0); // 目前頁碼
+  const [rowsPerPage, setRowsPerPage] = useState(4); // 每頁行數
   const paginatedData = applyPagination(companiesData, page, rowsPerPage);
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const Page = () => {
     <>
       <Head>
         <title>
-          Companies | Devias Kit
+          已註冊店家管理
         </title>
       </Head>
       <Box

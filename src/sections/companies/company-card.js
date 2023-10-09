@@ -165,16 +165,17 @@ export const CompanyCard = (props) => {
           >
             {company.name}
           </Typography>
-          {/* <Typography
+          <Typography
             align="center"
             variant="body1"
+            color='#0E7090'
           >
-            {company.description}
-          </Typography> */}
+            點擊卡片編輯詳細資訊
+          </Typography>
         </CardContent>
         <Box sx={{ flexGrow: 1 }} />
         {/* 這裡要註解 */}
-        <Stack
+        {/* <Stack
           alignItems="center"
           direction="row"
           justifyContent="space-between"
@@ -219,7 +220,7 @@ export const CompanyCard = (props) => {
               {company.downloads} Downloads
             </Typography>
           </Stack>
-        </Stack>
+        </Stack> */}
         {/* ------- */}
       </CardActionArea>
     </Card>
