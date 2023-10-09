@@ -9,7 +9,7 @@ import {
   TextField,
 } from '@mui/material';
 import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
-import { putStoreById } from '../../Backend/StoreProtocol'
+import { postStore } from '../../Backend/StoreProtocol'
 
 const style = {
   position: 'absolute',
@@ -32,7 +32,7 @@ export const CompaniesAdd = () => {
   const handleClose = () => setOpen(false);
   const [values, setValues] = useState({
     categoryId: 'string',
-    name: 'string',
+    name: '填寫預新增的店家名稱',
     status: 'string',
     logoImageUrl: 'string',
     siteUrl: 'string',
@@ -41,21 +41,21 @@ export const CompaniesAdd = () => {
     closedHours: 'string',
     phone: 'string',
     lineId: 'string',
-    description: 'string',
+    description: '填寫預新增的店家名稱',
     discountInfo: 'string',
     discountDescription: 'string',
     discountStartTime: '2023-10-03T08:08:06.278Z',
     discountEndTime: '2023-10-03T08:08:06.278Z',
     latitude: 'string',
     longitude: 'string'
-  }
-  );
+  });
 
   const handleChange = useCallback(
     (event) => {
+      const { name, value } = event.target; // 拿value的值
       setValues((prevState) => ({
         ...prevState,
-        [event.target.name]: event.target.value
+        [name]: value, // 使用value的名稱更新values中對應的字串
       }));
     },
     []
@@ -64,21 +64,19 @@ export const CompaniesAdd = () => {
   const handleSubmit = useCallback(
     async (event) => {
       event.preventDefault();
-      const id = '1';
       try {
-        // 使用 Axios 或其他方法发送数据到后端 API
-        const response = await postStore( values)
-        console.log('Response from server:', response.data);
-        // 关闭模态框或执行其他操作
+        const response = await postStore(values)
+        console.log('Response from server:', response);
+        if (response.status === 201) {
+          window.location.reload();
+        }
         handleClose();
       } catch (error) {
         console.error('Error submitting form:', error);
-        // 处理错误情况
       }
     },
-    []
+    [values]
   );
-
 
   return (
     <>
@@ -127,7 +125,7 @@ export const CompaniesAdd = () => {
                   onChange={handleChange}
                   required
                   name="name" // 设置name属性以匹配values中的字段
-                  value={values.name}
+                  placeholder='name'
                 />
                 <TextField
                   fullWidth
@@ -136,7 +134,7 @@ export const CompaniesAdd = () => {
                   onChange={handleChange}
                   required
                   name="description" // 设置name属性以匹配values中的字段
-                  value={values.description}
+                  placeholder='description'
                 />
                 {/* 未來新增處 */}
                 <Button

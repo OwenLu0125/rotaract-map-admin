@@ -18,7 +18,6 @@ import { CompaniesAdd } from 'src/sections/companies/companies-add';
 
 const Page = () => {
   const [companiesData, setCompaniesData] = useState([]);
-// FIXME: 串接的寫法
   useEffect(() => {
     const getCompaniesData = async () => {
       try {
@@ -57,32 +56,6 @@ const Page = () => {
                 <Typography variant="h4">
                   已註冊店家
                 </Typography>
-                {/* <Stack
-                  alignItems="center"
-                  direction="row"
-                  spacing={1}
-                >
-                  <Button
-                    color="inherit"
-                    startIcon={(
-                      <SvgIcon fontSize="small">
-                        <ArrowUpOnSquareIcon />
-                      </SvgIcon>
-                    )}
-                  >
-                    Import
-                  </Button>
-                  <Button
-                    color="inherit"
-                    startIcon={(
-                      <SvgIcon fontSize="small">
-                        <ArrowDownOnSquareIcon />
-                      </SvgIcon>
-                    )}
-                  >
-                    Export
-                  </Button>
-                </Stack> */}
               </Stack>
               <CompaniesAdd />
             </Stack>
