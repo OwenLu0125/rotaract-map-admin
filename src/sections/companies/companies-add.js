@@ -68,6 +68,9 @@ export const CompaniesAdd = () => {
       try {
         const response = await postStore(values)
         console.log('Response from server:', response);
+        if (response.status === 201) {
+          window.location.reload();
+        }
         handleClose();
       } catch (error) {
         console.error('Error submitting form:', error);

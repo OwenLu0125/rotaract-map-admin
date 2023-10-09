@@ -21,6 +21,6 @@ export async function getStore() {
 }
 export async function postStore(values: any ) {
   const response = await instance.post<Store>(`${BACKEND_DOMAIN}/store`,values);
-  return response.data;
+  return response;
 }
 
