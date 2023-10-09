@@ -1,8 +1,9 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ArrowDownOnSquareIcon from '@heroicons/react/24/solid/ArrowDownOnSquareIcon';
 import ClockIcon from '@heroicons/react/24/solid/ClockIcon';
 import { Avatar, Box, Card, CardContent, Divider, Stack, SvgIcon, Typography, CardActionArea, Modal, Popover, TextField, Button } from '@mui/material';
+import * as authProtocol from '../../Backend/StoreProtocol'
 
 
 const style = {
@@ -36,6 +37,22 @@ export const CompanyCard = (props) => {
     },
     []
   );
+
+  const handleDelete = async (event) => {
+    event.preventDefault();
+    console.log(company.id)
+    try {
+      const response = await authProtocol.deleteStoreById(company.id)
+      console.log('Response from server:', response);
+      if (response.status === 204) {
+        window.location.reload();
+      }
+      handleClose();
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    }
+  }
+    ;
 
   return (
     <Card
@@ -85,7 +102,7 @@ export const CompanyCard = (props) => {
               fullWidth
               label="商店描述"
               multiline
-              maxRows={4}
+              maxRows={5}
               variant="outlined"
               onChange={handleChange}
               required
@@ -106,6 +123,7 @@ export const CompanyCard = (props) => {
               sx={{
                 backgroundColor: '#F79009',
               }}
+              onClick={handleDelete}
             >
               刪除
             </Button>

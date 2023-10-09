@@ -13,7 +13,7 @@ export async function putStoreById(storeId: number,values: any ) {
 }
 export async function deleteStoreById(storeId: number) {
   const response = await instance.delete<Store>(`${BACKEND_DOMAIN}/store/${storeId}`);
-  return response.data;
+  return response;
 }
 export async function getStore() {
   const response = await instance.get<Store>(`${BACKEND_DOMAIN}/store`);
