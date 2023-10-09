@@ -9,7 +9,7 @@ export async function getStoreById(storeId: number) {
 
 export async function putStoreById(storeId: number,values: any ) {
   const response = await instance.put<Store>(`${BACKEND_DOMAIN}/store/${storeId}`,values);
-  return response.data;
+  return response;
 }
 export async function deleteStoreById(storeId: number) {
   const response = await instance.delete<Store>(`${BACKEND_DOMAIN}/store/${storeId}`);
@@ -23,4 +23,3 @@ export async function postStore(values: any ) {
   const response = await instance.post<Store>(`${BACKEND_DOMAIN}/store`,values);
   return response;
 }
-

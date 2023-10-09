@@ -48,8 +48,7 @@ export const CompaniesAdd = () => {
     discountEndTime: '2023-10-03T08:08:06.278Z',
     latitude: 'string',
     longitude: 'string'
-  }
-  );
+  });
 
   const handleChange = useCallback(
     (event) => {

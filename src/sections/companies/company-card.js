@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ArrowDownOnSquareIcon from '@heroicons/react/24/solid/ArrowDownOnSquareIcon';
 import ClockIcon from '@heroicons/react/24/solid/ClockIcon';
 import { Avatar, Box, Card, CardContent, Divider, Stack, SvgIcon, Typography, CardActionArea, Modal, Popover, TextField, Button } from '@mui/material';
-import * as authProtocol from '../../Backend/StoreProtocol'
+import * as StoreProtocol from '../../Backend/StoreProtocol'
 
 
 const style = {
@@ -26,13 +26,14 @@ export const CompanyCard = (props) => {
   const [cardOpen, setCardOpen] = useState(false);
   const handleCardOpen = () => setCardOpen(true);
   const handleCardClose = () => setCardOpen(false);
+  const [postValue, setPostValue] = useState(company);
 
   const handleChange = useCallback(
     (event) => {
-      const { name, value } = event.target; // 拿value的值
-      setValues((prevState) => ({
+      const { name, value } = event.target; // 拿文字區value的值
+      setPostValue((prevState) => ({
         ...prevState,
-        [name]: value, // 使用value的名稱更新values中對應的字串
+        [name]: value, // 使用value的名稱更新postValue中對應的字串
       }));
     },
     []
@@ -40,9 +41,8 @@ export const CompanyCard = (props) => {
 
   const handleDelete = async (event) => {
     event.preventDefault();
-    console.log(company.id)
     try {
-      const response = await authProtocol.deleteStoreById(company.id)
+      const response = await StoreProtocol.deleteStoreById(company.id)
       console.log('Response from server:', response);
       if (response.status === 204) {
         window.location.reload();
@@ -51,8 +51,22 @@ export const CompanyCard = (props) => {
     } catch (error) {
       console.error('Error submitting form:', error);
     }
-  }
-    ;
+  };
+
+  const handlePost = async () => {
+    console.log(company.id, postValue);
+    try {
+      const response = await StoreProtocol.putStoreById(company.id, postValue);
+      if (response.status === 200) {
+        window.location.reload();
+      }
+      console.log('Response from server:', response);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    }
+  };
+
+
 
   return (
     <Card
@@ -96,7 +110,7 @@ export const CompanyCard = (props) => {
               required
               name="name" // 設定name属性以對應values中的字串
               placeholder='name'
-              value={company.name}
+              value={postValue.name}
             />
             <TextField
               fullWidth
@@ -108,18 +122,16 @@ export const CompanyCard = (props) => {
               required
               name="description"
               placeholder='description'
-              value={company.description}
+              value={postValue.description}
             />
             {/* 未來新增處 */}
             <Button
               variant="contained"
-              type="submit"
-            >
-              新增
+              onClick={handlePost}            >
+              修改
             </Button>
             <Button
               variant="contained"
-              type="submit"
               sx={{
                 backgroundColor: '#F79009',
               }}
