@@ -31,23 +31,10 @@ export const CompaniesAdd = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [values, setValues] = useState({
-    categoryId: 'string',
-    name: '填寫預新增的店家名稱',
-    status: 'string',
-    logoImageUrl: 'string',
-    siteUrl: 'string',
-    address: 'string',
-    openingHours: 'string',
-    closedHours: 'string',
-    phone: 'string',
-    lineId: 'string',
-    description: '填寫預新增的店家名稱',
-    discountInfo: 'string',
-    discountDescription: 'string',
-    discountStartTime: '2023-10-03T08:08:06.278Z',
-    discountEndTime: '2023-10-03T08:08:06.278Z',
-    latitude: 'string',
-    longitude: 'string'
+    松山區: false,
+    大安區: false,
+    中山區: false,
+    大同區: false,
   });
 
   const handleChange = useCallback(
